@@ -1,0 +1,461 @@
+<!--
+  code: acp-sanur;
+  auth: budiono;
+  date: nov-16, 08:22, thu-2023; edit;
+  edit: dec-01, 11:15, fri-2023; tahap-08;
+  edit: dec-31, 11:50, sun-2023; components.js;
+  -----------------------------; happy new year 2024;
+  edit: jan-08, 09:32, mon-2024; remove components-dom.js;
+  edit: jan-09, 09:22, tue-2024; add form.js;
+  edit: jan-31, 08:12, wed-2023; payroll;
+  edit: feb-04, 16:02, sun-2024; time and expense;
+  edit: feb-05, 18:07, mon-2024; deposits;
+  edit: feb-28, 08:52, wed-2024; query;
+  edit: mar-01, 16:42, fri-2024; query run;
+  edit: mar-15, 09:34, fri-2024; 
+  edit: mar-17, 15:03, sun-2024; tables;
+  edit: oct-04, 11:22, fri-2024; redeem;
+  edit: nov-06, 13:08, wed-2024; close_period;
+  edit: dec-12, 12:02, thu-2024; change documents->folders;
+  -----------------------------; happy new year 2025;
+  edit: jan-13, 16:30, mon-2025; contacts;
+  edit: jan-14, 10:06, tue-2025; contacts+groups;
+  edit: apr-17, 17:12, thu-2025; download_all.js;
+  edit: may-02, 14:27, fri-2025; currencies;exchange_rates;
+  edit: may-10, 07:20, sat-2025; rpt_cost_code_list;
+  edit: may-12, 11:11, mon-2025; rpt_general_ledger_trial_balance;
+  edit: may-14, 10:56, wed-2025; rpt_component_use_list;
+  edit: may-18, 12:28, sun-2025; rpt_cogs_journal;
+  edit: may-21, 17:52, wed-2025; rpt_item_purchased;
+  edit: may-23, 08:55, fri-2025; rpt_vendor_transaction_history;
+  edit: may-24, 10:58, sat-2025; rpt_invoice_register;
+  edit: may-27, 15:30, tue-2025; rpt_job_estimates;
+  edit: may-28, 15:52; wed-2025; rpt_job_register;
+  edit: may-30, 07:50, fri-2025; rpt_job_costs_by_type;
+  edit: jun-01, 17:42, sun-2025; rpt_payroll_tax_report;
+  edit: jun-10, 15:32, tue-2025; rpt_vacation_and_sick_time;
+  edit: jun-11, 16:38, wed-2025; rpt_customer_ledgers;
+  edit: jun-13, 11:23, fri-2025; rpt_vendor_ledgers;
+  edit: jun-15, 13:54, sun-2025; rpt_balance_sheet;
+  edit: jun-18, 19:03, wed-2025; rpt_income_statement;
+  edit: jun-20, 10:11, fri-2025; rpt_bank_deposit_report;
+  edit: jul-07, 12:07, mon-2025; rpt_account_reconciliation;
+  edit: jul-08, 16:20, tue-2025; rpt_account_register;
+  edit: jul-09, 21:35, wed-2025; rpt_deposits_in_transit;
+  edit: jul-10, 15:39, thu-2025; rpt_outstanding_checks;
+  edit: jul-12, 10:40, sat-2025; frm_employee_balances;
+  edit: jul-18, 11:16, fri-2025; rpt_employee_time;
+  edit: jul-19, 10:15, sat-2025; rpt_ticket_listing_by_customer;
+  edit: jul-19, 16:20, sat-2025; rpt_time_ticket_register;
+  edit: jul-20, 11:27, sun-2025; rpt_tickets_by_item_id;
+  edit: jul-21, 12:39, mon-2025; rpt_payroll_time_sheet;
+  edit: jul-28, 16:48, mon-2025; ticket_lookup;
+  edit: aug-08, 16:02, fri-2025; rpt_reimbursable;
+  edit: aug-10, 14:23, sun-2025; rpt_contact_list;
+  edit: aug-12, 14:48, tue-2025; rpt_cash_account_register;
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--disable mix content-->
+  <!--
+  <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content" />
+  -->
+  
+  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--enabled mix content-->
+  <!--
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  -->
+  
+  
+  
+  
+  <title>Rangkai Data</title>
+  
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/kertas-a4.css">
+  <link rel="stylesheet" href="css/kertas-a4-landscape.css">
+</head>
+
+<body>
+  <div id="landing_page"></div>
+  <div id="rootx" style="background:grey;"></div>
+  <div id="pertamax"></div>
+</body>
+
+<script src="script.js?n=1"></script>
+
+<script src="main/data_set.js?n=1"></script>
+<script src="main/sql_database_2.js?n=1"></script>
+<script src="main/menus.js?n=1"></script>
+<script src="main/func.js?n=1"></script>
+<!--event-->
+<script src="main/event/drag.js?n=1"></script>
+<script src="main/event/size.js?n=1"></script>
+<script src="main/event/window.js?n=1"></script>
+<!--gui-->
+<script src="main/gui/ui.js?n=1"></script>
+<script src="main/gui/bingkai.js?n=1"></script>
+<script src="main/gui/content.js?n=1"></script>
+<script src="main/gui/statusbar.js?n=1"></script>
+<script src="main/gui/toolbar.js?n=1"></script>
+<script src="main/gui/message.js?n=1"></script>
+<!--<script src="main/gui/form.js?n=1"></script>-->
+<script src="main/gui/form_2.js?n=1"></script>
+<script src="main/gui/grid.js?n=1"></script>
+<!--data-->
+<script src="main/data/db.js?n=1"></script>
+<script src="main/data/db1.js?n=1"></script>
+<script src="main/data/db3.js?n=1"></script>
+<!--components [trial & error still dev]-->
+<script src="main/components/foo.js"></script>
+<!--modul-->
+<script src="main/landing_page.js?n=1"></script>
+<script src="main/login.js?n=1"></script>
+<script src="main/register.js?n=1"></script>
+<script src="main/forgot.js?n=1"></script>
+<script src="main/about.js?n=1"></script>
+<script src="main/page_404.js?n=1"></script>
+<script src="main/image.js?n=1"></script>
+<script src="main/logout.js?n=1"></script>
+<script src="main/import_data.js?n=1"></script>
+<script src="main/redeem.js?n=1"></script>
+<script src="main/data_locker.js?n=1"></script>
+<script src="main/properties.js?n=1"></script>
+<script src="main/download_rows.js?n=1"></script>
+<script src="main/download_all.js?n=1"></script>
+<script src="main/download_tiga.js?n=1"></script>
+<script src="main/download_empat.js?n=1"></script>
+<script src="main/html_css.js?n=1"></script>
+<script src="main/template_svg.js?n=1"></script>
+<!--look-->
+<script src="directory/folders_look.js?n=1"></script>
+<script src="system/tables_look.js?n=1"></script>
+<!--home-->
+<script src="home/home.js?n=1"></script>
+<script src="home/mores.js?n=1"></script>
+<!--company-->
+<script src="company/company.js?n=1"></script>
+<script src="company/company_look.js?n=1"></script>
+<script src="company/manage_users.js?n=1"></script>
+<script src="company/company_profile.js?n=1"></script>
+<script src="company/backup.js?n=1"></script>
+<script src="company/restore.js?n=1"></script>
+<script src="company/fiscal_year.js?n=1"></script>
+<script src="company/currencies.js?n=1"></script>
+<script src="company/currency_look.js?n=1"></script>
+<script src="company/exchange_rates.js?n=1"></script>
+<!--apps-->
+<script src="apps/list_look.js?n=1"></script>
+<script src="apps/room_look.js?n=1"></script>
+
+<script src="apps/tasks.js?n=1"></script>
+<script src="apps/contacts.js?n=1"></script>
+<script src="apps/notifications.js?n=1"></script>
+<script src="apps/calendar.js?n=1"></script>
+<script src="apps/calculator.js?n=1"></script>
+<script src="apps/labels.js?n=1"></script>
+<script src="apps/label_look.js?n=1"></script>
+<script src="apps/notes.js?n=1"></script>
+<script src="apps/lists.js?n=1"></script>
+<script src="apps/contact_look.js?n=1"></script>
+<script src="apps/groups.js?n=1"></script>
+<script src="apps/group_look.js?n=1"></script>
+<script src="apps/reply.js?n=1"></script>
+<script src="apps/messages.js?n=1"></script>
+<script src="apps/rooms.js?n=1"></script>
+<!--network-->
+<script src="network/network.js?n=1"></script>
+
+<!--setting-->
+<script src="system/blockchain.js?n=1"></script>
+<script src="system/md5.js?n=1"></script>
+<script src="system/setting.js?n=1"></script>
+<script src="system/user_profile.js?n=1"></script>
+<script src="system/clipboard.js?n=1"></script>
+<script src="system/trash.js?n=1"></script>
+<script src="system/small_query.js?n=1"></script>
+<script src="system/tables.js?n=1"></script>
+<script src="system/quota.js?n=1"></script>
+<script src="system/locker.js?n=1"></script>
+<script src="system/files.js?n=1"></script>
+<script src="system/my_menu.js?n=1"></script>
+<script src="system/path.js?n=1"></script>
+<script src="system/collections.js?n=1"></script>
+<script src="system/change_password.js?n=1"></script>
+<script src="system/sessions.js?n=1"></script>
+
+<!--documents-->
+<script src="directory/folders.js?n=1"></script>
+<!--admin-->
+<script src="admin/user_levels.js?n=1"></script>
+<script src="admin/send_emails.js?n=1"></script>
+<script src="admin/reset_password_look.js?n=1"></script>
+<!--accounting-->
+<script src="accounting/discount_terms.js?n=1"></script>
+<!--accounting/job [hoisting]-->
+<script src="accounting/jobs/job_look.js?n=1"></script>
+<!--accounting/ledgers-->
+<script src="accounting/ledgers/period_look.js?n=1"></script>
+<script src="accounting/ledgers/accounts.js?n=1"></script>
+<script src="accounting/ledgers/account_look.js?n=1"></script>
+<script src="accounting/ledgers/period.js?n=1"></script>
+<script src="accounting/ledgers/account_begins.js?n=1"></script>
+<script src="accounting/ledgers/account_balances.js?n=1"></script>
+<script src="accounting/ledgers/journal_entry.js?n=1"></script>
+<script src="accounting/ledgers/account_defaults.js?n=1"></script>
+<script src="accounting/ledgers/budgets.js?n=1"></script>
+<script src="accounting/ledgers/close_period.js?n=1"></script>
+<!--accounting/sales [hoisting]-->
+<script src="accounting/sales/customer_look.js?n=1"></script>
+<script src="accounting/time_and_expense/ticket_look.js?n=1"></script>
+<!--accounting/jobs-->
+<script src="accounting/jobs/costs.js?n=1"></script>
+<script src="accounting/jobs/cost_look.js?n=1"></script>
+<script src="accounting/jobs/phases.js?n=1"></script>
+<script src="accounting/jobs/phase_look.js?n=1"></script>
+<script src="accounting/jobs/jobs.js?n=1"></script>
+<script src="accounting/jobs/job_begins.js?n=1"></script>
+<script src="accounting/jobs/job_balances.js?n=1"></script>
+<!--accounting/purchase [hoisting]-->
+<script src="accounting/purchases/vendor_look.js?n=1"></script>
+<script src="accounting/payrolls/employee_look.js?n=1"></script>
+<!--accounting/payroll [hoisting]-->
+<script src="accounting/payrolls/sales_rep_look.js?n=1"></script>
+<script src="accounting/payrolls/supervisor_look.js?n=1"></script>
+<!--accounting/inventory-->
+<script src="accounting/inventory/buyers_look.js?n=1"></script>
+<script src="accounting/inventory/locations_look.js?n=1"></script>
+<script src="accounting/inventory/locations.js?n=1"></script>
+<script src="accounting/inventory/item_taxes.js?n=1"></script>
+<script src="accounting/inventory/item_taxes_look.js?n=1"></script>
+<script src="accounting/inventory/ship_methods.js?n=1"></script>
+<script src="accounting/inventory/ship_method_look.js?n=1"></script>
+<script src="accounting/inventory/item_defaults.js?n=1"></script>
+<script src="accounting/inventory/items.js?n=1"></script>
+<script src="accounting/inventory/item_look.js?n=1"></script>
+<script src="accounting/inventory/stock_item_look.js?n=1"></script>
+<script src="accounting/inventory/boms.js?n=1"></script>
+<script src="accounting/inventory/prices.js?n=1"></script>
+<script src="accounting/inventory/item_begins.js?n=1"></script>
+<script src="accounting/inventory/item_balances.js?n=1"></script>
+<script src="accounting/inventory/boms_look.js?n=1"></script>
+<script src="accounting/inventory/builds.js?n=1"></script>
+<script src="accounting/inventory/unbuilds.js?n=1"></script>
+<script src="accounting/inventory/moves.js?n=1"></script>
+<script src="accounting/inventory/adjustments.js?n=1"></script>
+<!--accounting/sales-->
+<script src="accounting/sales/so_status_look.js?n=1"></script>
+<script src="accounting/sales/pay_methods.js?n=1"></script>
+<script src="accounting/sales/pay_methods_look.js?n=1"></script>
+<script src="accounting/sales/sales_tax.js?n=1"></script>
+<script src="accounting/sales/sales_tax_look.js?n=1"></script>
+<script src="accounting/sales/customer_defaults.js?n=1"></script>
+<script src="accounting/sales/customers.js?n=1"></script>
+<script src="accounting/sales/customer_begins.js?n=1"></script>
+<script src="accounting/sales/customer_balances.js?n=1"></script>
+<script src="accounting/sales/quotes.js?n=1"></script>
+<script src="accounting/sales/ship_to_customer.js?n=1"></script>
+<script src="accounting/sales/quote_look.js?n=1"></script>
+<script src="accounting/sales/convert_quotes.js?n=1"></script>
+<script src="accounting/sales/sales_orders.js?n=1"></script>
+<script src="accounting/sales/invoices.js?n=1"></script>
+<script src="accounting/sales/paid_at_sale.js?n=1"></script>
+<script src="accounting/sales/credit_card.js?n=1"></script>
+<!--<script src="accounting/sales/sales_reference.js?n=1"></script>-->
+<script src="accounting/sales/invoice_look.js?n=1"></script>
+<script src="accounting/sales/void_invoices.js?n=1"></script>
+<script src="accounting/sales/receipts.js?n=1"></script>
+<script src="accounting/sales/deposits.js?n=1"></script>
+<script src="accounting/sales/customer_credits.js?n=1"></script>
+<script src="accounting/sales/close_so.js?n=1"></script>
+<!--accounting/purchases-->
+<script src="accounting/purchases/po_status_look.js?n=1"></script>
+<script src="accounting/purchases/vendor_defaults.js?n=1"></script>
+<script src="accounting/purchases/vendors.js?n=1"></script>
+<script src="accounting/purchases/vendor_begins.js?n=1"></script>
+<script src="accounting/purchases/vendor_balances.js?n=1"></script>
+<script src="accounting/purchases/purchase_reference.js?n=1"></script>
+<script src="accounting/purchases/purchase_orders.js?n=1"></script>
+<script src="accounting/purchases/ship_to_address.js?n=1"></script>
+<script src="accounting/purchases/receive_inventory.js?n=1"></script>
+<script src="accounting/purchases/payments.js?n=1"></script>
+<script src="accounting/purchases/payment_look.js?n=1"></script>
+<script src="accounting/purchases/pay_address.js?n=1"></script>
+<script src="accounting/purchases/void_payments.js?n=1"></script>
+<script src="accounting/purchases/vendor_checks.js?n=1"></script>
+<script src="accounting/purchases/vendor_check_look.js?n=1"></script>
+<script src="accounting/purchases/void_checks.js?n=1"></script>
+<script src="accounting/purchases/vendor_credits.js?n=1"></script>
+<script src="accounting/purchases/close_po.js?n=1"></script>
+<!--accounting/payrolls-->
+<script src="accounting/payrolls/payroll_field_look.js?n=1"></script>
+<script src="accounting/payrolls/payroll_look.js?n=1"></script>
+<script src="accounting/payrolls/payroll_fields.js?n=1"></script>
+<script src="accounting/payrolls/employee_defaults.js?n=1"></script>
+<script src="accounting/payrolls/employees.js?n=1"></script>
+<script src="accounting/payrolls/payroll_periods.js?n=1"></script>
+<script src="accounting/payrolls/employee_begins.js?n=1"></script>
+<script src="accounting/payrolls/payroll_entry.js?n=1"></script><!--new 1-->
+<script src="accounting/payrolls/employee_balances.js?n=1"></script>
+<script src="accounting/payrolls/void_payroll.js?n=1"></script>
+<!---time and expense-->
+<script src="accounting/inventory/activity_item_look.js?n=1"></script><!--new 2-->
+<script src="accounting/inventory/charge_item_look.js?n=1"></script><!--new 3-->
+<script src="accounting/time_and_expense/time_tickets.js?n=1"></script><!--new 4-->
+<script src="accounting/time_and_expense/expense_tickets.js?n=1"></script><!--new 5-->
+
+<!--accounting/reports-->
+<script src="accounting/reports.js?n=1"></script>
+<script src="main/look_table.js?n=1"></script>
+
+<!--accounting/all-reports-->
+<script src="accounting/reports/rpt_ar.js?n=1"></script>
+<script src="accounting/reports/rpt_ap.js?n=1"></script>
+<script src="accounting/reports/rpt_vendor_list.js?n=1"></script>
+<script src="accounting/reports/rpt_customer_list.js?n=1"></script>
+<script src="accounting/reports/rpt_employee_list.js?n=1"></script>
+<script src="accounting/reports/rpt_item_list.js?n=1"></script>
+<script src="accounting/reports/rpt_cost_code_list.js?n=1"></script>
+<script src="accounting/reports/rpt_phase_list.js?n=1"></script>
+<script src="accounting/reports/rpt_assembly_list.js?n=1"></script>
+<script src="accounting/reports/rpt_chart_of_accounts.js?n=1"></script>
+<script src="accounting/reports/rpt_general_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_general_ledger.js?n=1"></script>
+<script src="accounting/reports/rpt_general_ledger_trial_balance.js?n=1"></script>
+<script src="accounting/reports/rpt_component_use_list.js?n=1"></script>
+<script src="accounting/reports/rpt_inventory_adjustment_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_inventory_stock.js?n=1"></script>
+<script src="accounting/reports/rpt_item_costing.js?n=1"></script>
+<script src="accounting/reports/rpt_price_list.js?n=1"></script>
+<script src="accounting/reports/rpt_physical_inventory.js?n=1"></script>
+<script src="accounting/reports/rpt_assemblies_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_boms_report.js?n=1"></script>
+<script src="accounting/reports/rpt_buyer_report.js?n=1"></script>
+<!--may 18,2025;-->
+<script src="accounting/reports/rpt_cogs_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_cash_receipts_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_sales_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_cash_disbursements_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_purchase_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_payroll_journal.js?n=1"></script>
+<script src="accounting/reports/rpt_profitability_report.js?n=1"></script>
+<script src="accounting/reports/rpt_reorder_worksheet.js?n=1"></script>
+<script src="accounting/reports/rpt_cash_requirements.js?n=1"></script>
+<!--may 21,2025-->
+<script src="accounting/reports/rpt_purchase_order_register.js?n=1"></script>
+<script src="accounting/reports/rpt_check_register.js?n=1"></script>
+<script src="accounting/reports/rpt_item_purchased.js?n=1"></script>
+<!--may 22, 2025-->
+<script src="accounting/reports/rpt_vendor_management.js?n=1"></script>
+<!--may-23, 2025-->
+<script src="accounting/reports/rpt_vendor_transaction_history.js?n=1"></script>
+<script src="accounting/reports/rpt_customer_management.js?n=1"></script>
+<script src="accounting/reports/rpt_customer_transaction.js?n=1"></script>
+<!--may-24, 2025-->
+<script src="accounting/reports/rpt_invoice_register.js?n=1"></script>
+<script src="accounting/reports/rpt_quote_register.js?n=1"></script>
+<script src="accounting/reports/rpt_sales_order_register.js?n=1"></script>
+<script src="accounting/reports/rpt_sales_order_report.js?n=1"></script>
+<script src="accounting/reports/rpt_sales_taxes.js?n=1"></script>
+<!--may-25, 2025-->
+<script src="accounting/reports/rpt_est_job_expenses.js?n=1"></script>
+<script src="accounting/reports/rpt_est_job_revenue.js?n=1"></script>
+<!--may-27, 2025-->
+<script src="accounting/reports/rpt_job_estimates.js?n=1"></script>
+<script src="accounting/reports/rpt_job_list.js?n=1"></script>
+<script src="accounting/reports/rpt_job_profitability_report.js?n=1"></script>
+<!--may-28, 2025-->
+<script src="accounting/reports/rpt_job_register.js?n=1"></script>
+<script src="accounting/reports/rpt_work_in_progress.js?n=1"></script>
+<!--may-30, 2025-->
+<script src="accounting/reports/rpt_job_costs_by_type.js?n=1"></script>
+<script src="accounting/reports/rpt_job_ledger_report.js?n=1"></script>
+<script src="accounting/reports/rpt_unbilled_job_expenses.js?n=1"></script>
+<script src="accounting/reports/rpt_job_retainage_report.js?n=1"></script>
+<!---may-31, 2025-->
+<script src="accounting/reports/rpt_payroll_check_register.js?n=1"></script>
+<script src="accounting/reports/rpt_payroll_register.js?n=1"></script>
+<!---jun-01, 2025-->
+<script src="accounting/reports/rpt_payroll_tax_report.js?n=1"></script>
+<!---jun-02, 2025-->
+<script src="accounting/reports/rpt_current_earnings_report.js?n=1"></script>
+<!---jun-10, 2025-->
+<script src="accounting/reports/rpt_vacation_and_sick_time.js?n=1"></script>
+<!--jun-11, 2025-->
+<script src="accounting/reports/rpt_tax_liability_report.js?n=1"></script>
+<script src="accounting/reports/rpt_customer_ledgers.js?n=1"></script>
+<!--jun-12, 2025-->
+<script src="accounting/reports/rpt_items_sold.js?n=1"></script>
+<!--jun-13, 2025-->
+<script src="accounting/reports/rpt_customer_sales_history.js?n=1"></script>
+<script src="accounting/reports/rpt_vendor_ledgers.js?n=1"></script>
+<!--jun-15, 2025-->
+<script src="accounting/reports/rpt_balance_sheet.js?n=1"></script>
+<!--jun-18, 2025-->
+<script src="accounting/reports/rpt_income_statement.js?n=1"></script>
+<!--jun-19, 2025-->
+<script src="accounting/reports/rpt_gl_account_summary.js?n=1"></script>
+<script src="accounting/reports/rpt_retained_earnings.js?n=1"></script>
+<!--jun-20, 2025-->
+<script src="accounting/reports/rpt_bank_deposit_report.js?n=1"></script>
+
+<!--form-->
+<script src="accounting/banking/frm_reconcile.js?n=1"></script>
+<!--jul-07, 2005-->
+<script src="accounting/reports/rpt_account_reconciliation.js?n=1"></script>
+<script src="accounting/reports/rpt_account_register.js?n=1"></script>
+<!--jul-09, 2025-->
+<script src="accounting/reports/rpt_deposits_in_transit.js?n=1"></script>
+<!--jul-10, 2025-->
+<script src="accounting/reports/rpt_outstanding_checks.js?n=1"></script>
+<script src="accounting/reports/rpt_other_outstanding_items.js?n=1"></script>
+<!--jul-12, 2025-->
+<!--jul-18, 2025-->
+<script src="accounting/reports/rpt_employee_time.js?n=1"></script>
+<script src="accounting/reports/rpt_expense_ticket.js?n=1"></script>
+<!--jul-19, 2025-->
+<script src="accounting/reports/rpt_ticket_listing_by_customer.js?n=1"></script>
+<script src="accounting/reports/rpt_time_ticket_register.js?n=1"></script>
+<!--jul-20, 2025-->
+<script src="accounting/reports/rpt_tickets_by_item_id.js?n=1"></script>
+<script src="accounting/reports/rpt_tickets_recorded_by.js?n=1"></script>
+<!--jul-21, 2025-->
+<script src="accounting/reports/rpt_payroll_time_sheet.js?n=1"></script>
+<!--jul-28, 2025-->
+<script src="accounting/reports/rpt_reimbursable.js?n=1"></script>
+<!--aug-09, 2025-->
+<script src="accounting/reports/rpt_ticket_sales_invoicing.js?n=1"></script>
+<script src="accounting/reports/rpt_aged_tickets.js?n=1"></script>
+<!--aug-10, 2025-->
+<script src="accounting/reports/rpt_contact_list.js?n=1"></script>
+<script src="accounting/reports/rpt_taxable_exempt_sales.js?n=1"></script>
+<!--aug-12, 2025-->
+<script src="accounting/reports/rpt_cash_account_register.js?n=1"></script>
+<script src="accounting/reports/rpt_sales_rep_reports.js?n=1"></script>
+<!--mar-18, 2026-->
+<script src="accounting/preview/preview_po.js?n=1"></script>
+<script src="accounting/preview/preview_quote.js?n=1"></script>
+<script src="accounting/preview/preview_so.js?n=1"></script>
+<script src="accounting/preview/preview_invoice.js?n=1"></script>
+<script src="accounting/preview/preview_receipt.js?n=1"></script>
+<script src="accounting/preview/preview_deposit.js?n=1"></script>
+<script src="accounting/preview/preview_check.js?n=1"></script>
+<script src="accounting/preview/preview_payroll.js?n=1"></script>
+
+
+<!--javaScript start-->
+<script>main();</script>
+</html>
+
+
+
+<!--eof:39;79;154;179;289;319;339;349;369;373;397;408;-->
