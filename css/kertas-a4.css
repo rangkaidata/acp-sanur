@@ -1,0 +1,45 @@
+.a4 {
+  width: 210mm;
+  height: 297mm;
+  margin: 20px auto;
+  padding: 15mm;
+  box-shadow: 0 0  10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  /*background-color: #e0e0e0;*/
+/*  display: flex;*/
+/*  justify-content: center; */
+/*  align-items: center;*/
+  display:float;
+  justify-content: left;
+  align-items: left;
+  min-height: 100vh;
+  margin: 0;
+  font-family: helvetica, verdana;
+  h1, p {
+    margin: 0 0 10px;
+  }
+}
+
+.a42 {
+  width: 210mm;
+  margin-left: 20px;
+  margin-top: 0;
+  padding-top: 0;
+/*  box-shadow: 0 0  10px rgba(0, 0, 0, 0.1); */
+/*  box-sizing: border-box; */
+  /*background-color: #e0e0e0;*/
+/*  display: flex; */
+/*  justify-content: center; */
+/*  align-items: center;*/
+  display:float;
+  justify-content: center;
+  align-items: center;
+/*  min-height: 100vh; */
+  margin: 0;
+  font-family: helvetica;
+/*  border:1px solid lightgrey; */
+  
+  h1, p {
+    margin: 0 0 10px;
+  }
+}

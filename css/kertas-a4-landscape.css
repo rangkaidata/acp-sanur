@@ -1,0 +1,50 @@
+
+.a4land {
+  width: 297mm;
+  height: 210mm;
+  margin: 20px auto;
+  padding: 15mm;
+  box-shadow: 0 0  10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display:float;
+  justify-content: left;
+  align-items: left;
+  min-height: 100vh;
+  margin: 0;
+  font-family: helvetica, verdana;
+  h1, p {
+    margin: 0 0 10px;
+  }
+}
+
+.a42land {
+  width: 297mm;
+  margin-left: 20px;
+  margin-top: 0;
+  padding-top: 0;
+  display:float;
+  justify-content: center;
+  align-items: center;
+  margin:0 auto;
+  font-family: helvetica;
+  h1, p {
+    margin: 0 0 10px;
+  }
+}
+
+.a42c {
+  position:sticky;
+  width:297mm;
+  margin-top:0;
+  padding:0;
+/*  border:1px solid red;*/
+}
+
+.a42d {
+  position:relative;
+  overflow-y:auto;
+  height:380px;
+  margin-top:10px;
+/*  border:1px solid blue;*/
+  width:1122px;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<div id="frm">
+
+<script>
+  var html='<form enctype="multipart/form-data" id="frm2">'
+    +'<input type="file" name="filetoupload" id="budi"><br>'
+    +'<input type="button" onclick="uploadImageChange3()" value="kirim">'
+    +'</form>'
+    
+  document.getElementById('frm').innerHTML=html;
+  
+  function uploadImageChange3(){
+    var form=document.getElementById('frm2');
+    var formData=new FormData(form);
+    fetch("http://localhost:8080/fileupload", { 
+      method: "POST",
+      body: formData,
+    }).then((response)=>{
+      
+    }).catch((error)=>{
+      
+    });
+  }
+</script>

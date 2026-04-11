@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+
+<head>
+  <title>Upload Company Logo</title>
+</head>
+
+
+<div id="frm">
+
+<script>
+  var html='<form enctype="multipart/form-data" id="frm2">'
+  
+    +'<p>Login ID: '
+    +'<input type="text" '
+      +'name="login_id" '
+      +'value="20241115084756195-513-4c54e93e3e08cd2556682363f6d4846f">'
+    +'</p>'
+
+    +'<p>'
+    +'Company ID: '
+    +'<input type="text" '
+      +'name="company_id">'
+    +'</p>'
+    
+    +'<p>'
+    +'File Logo: '
+    +'<input type="file" '
+      +'name="file_logo">'
+    +'</p>'
+    
+    +'<input type="button" '
+      +'onclick="upload_logo()" '
+      +'value="Send Logo">'
+  +'</form>'
+    
+  document.getElementById('frm').innerHTML=html;
+  
+  function upload_logo(){
+    var form=document.getElementById('frm2');
+    var formData=new FormData(form);
+    
+    fetch("http://localhost:8080/logo/upload", { 
+      method: "POST",
+      body: formData,
+    }).then((response)=>{
+      
+    }).catch((error)=>{
+      
+    });
+  }
+</script>

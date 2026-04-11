@@ -1,0 +1,181 @@
+
+
+// 6 Advanced Object Creation
+
+//	- Singleton pattern
+//	- Factory pattern
+//	- Abstract factory pattern
+//	- Builder pattern
+//	- Object pool pattern
+	
+	
+// Creating objects
+
+	var johnSmith = { name: "John", surname: "Smith"};
+	
+	function Person(name, surname) {
+		this.name = name;
+		this.surname = surname;
+	}
+	
+	class Person {
+		constructor(name, surnam) {
+	 		this.name = name;
+	 		this.surname = surname;
+		}
+	}
+	
+	var johnSmith = new Person("John", "Smith");
+	
+	var johnSmith = Object.create();
+	johnSmith.name = "John";
+	johnSmith.surname = "Smith";
+	
+	
+// Design patterns and object creation;	
+	
+// Creating a singleton;
+	
+	var johnSingleton = {
+		name: "John",
+		surname: "Singleton"
+	}
+	
+// The mysterious behavior of constructors;
+	
+	function Person(name, surname) {
+		this.name = name;
+		this.surname = surname;
+		
+		return "This is a person";
+	}
+	
+	var johnSmith = new Person("John", "Smith");
+
+	console.log(johnSmith.name);
+	console.log(johnSmith.surname);
+	
+	function Person(name, surname) {
+		this.name = name;
+		this.surname = surname;
+		
+		return {
+			firstName: name, 
+			secondName: surname 
+		};
+	}
+	
+	var johnSmith = new Person("John", "Smith");
+	
+	console.log(johnSmith.name);	// undefined
+	console.log(johnSmith.surname); //undefined
+	console.log(johnSmith.firstName); //John
+	console.log(johnSmith.secondName); //Smith
+	
+	
+// Singletons;
+
+// We used an IIFE in order to keep private the unique of the object created
+// by the constructor and the counter variable that tracks the current value
+// of the generated identifier;
+
+	var IdGenerator = (function() {
+		var instance;
+		var counter = 0;
+		
+		var Constructor = function() {
+			if (!instance) {
+				instance = this;
+			}
+			
+			return instance;
+		} 
+		
+		Constructor.prototype.newId = function() {
+			return ++counter;
+		}
+		
+		return Constructor;
+	}){};	
+	
+// When to use singletons?
+
+// An object factory;
+
+// Understanding factories;
+	
+	function createPerson(name, surname) {
+		return {
+			name: name,
+			surname: surname
+		}
+	}
+	
+	var johnSmith = createPerson("John", "Smith");
+	
+// The client:
+// The factory:
+// The product:
+	
+	
+// Recycling objects with an object pool;
+
+// A client: This is the objet that needs another object
+// An object pool: this is the component responsible for managing a set 
+// reusable  objects
+// A reusable object: This is the object required by the client
+
+	var ObjectPool = (function(){
+		var instance;
+		var objConstructor;
+		var objPool = [];
+		
+		return class {
+			constructor(objConstr) {
+				if (!instance) {
+					objConstructor = objConstr;
+					instance = this;
+				}
+				
+				return instance;
+			}
+			
+			get() {
+				var obj;
+				
+				if (objPool.length == 0) {
+					obj = new objConstructor();
+				} else {
+					obj = objPool.pop();
+				}
+				
+				return obj;
+			}
+			
+			recycle(obj) {
+				objPool.push(obj);
+			}
+		}
+	})();
+	
+	
+	class Trained {
+		explain() {...}
+		show() {...}
+		exercise() {...}
+	}
+	
+	var trainerPool = new ObjectPool(Trainer);
+	
+	var trainer1 = trainerPool.get();
+	var trainer2 = trainerPool.get();
+	
+	trainerPool.recycle(trainer1);
+	
+	var trainer2 = trainerPool.get();
+	
+	console.log(trainer1 == trainer2);  //false
+	console.log(trainer1 == trainer2);  //true
+	
+	
+	
