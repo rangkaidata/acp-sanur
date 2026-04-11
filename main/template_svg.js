@@ -20,6 +20,14 @@ class TemplateSVG {
       +' href="'+href+'" />';
   }
   
+  gambar2(left,top,id,height,width,href){
+    return ' <image '
+      +' id="'+id+'"'
+      +' x="'+left+'" y="'+top+'" '
+      +' height="'+height+'" width="'+width+'" '
+      +' xlink:href="'+href+'" />';
+  }
+  
   teks(left,top,id,size,caption,color,weight){
     return  '<text '
       +' id="'+id+'"'

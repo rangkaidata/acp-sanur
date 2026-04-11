@@ -312,7 +312,6 @@ Periods.exportExecute=(indek)=>{
 }
 
 Periods.importExecute=(indek)=>{
-  alert('import waiting ascending (sync)');
   
   var n=0;
   var m="<p>[Start]</p>";

@@ -30,13 +30,9 @@
 //====SETTING KONEKSI KE DATABASE SERVER/LOKAL========//
 const config_local={
   url:'http://localhost:8080/',
-  image:'http://localhost/image/',
 }
 const config_server={
-  url:'http://34.66.181.182:80/',
-  image:'http://34.66.181.182:80/image/',
-//  url:'https://datablok.id/', // google cloud 
-//  image:'https://rangkaidata.com/image/',
+  url:'https://api.rangkaidata.com/',
 }
 /* GANTI DISINI UNTUK KONEKSI KE SERVER ATAU KE LOKAL */
 const config=config_server;

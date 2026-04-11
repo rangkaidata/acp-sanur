@@ -1200,7 +1200,7 @@ SalesOrders.importExecute=(indek)=>{
         +" VALUES "
         +"('"+bingkai[indek].admin.name+"'"
         +",'"+bingkai[indek].company.id+"'"
-        +",''"
+//        +",''"
         +",'"+d[i][1]+"'" // quote_no
         +",'"+d[i][2]+"'" // customer id
         +",'"+d[i][3]+"'" // so_no
@@ -1216,7 +1216,7 @@ SalesOrders.importExecute=(indek)=>{
         +",'"+d[i][13]+"'" // sales_tax_id
         +",'"+d[i][14]+"'" // freight_account_id
         +",'"+d[i][15]+"'" // freight_amount
-//        +",'"+d[i][16]+"'" // note
+        +",'"+d[i][16]+"'" // note
         +")"
     },(paket)=>{  
       n++;
