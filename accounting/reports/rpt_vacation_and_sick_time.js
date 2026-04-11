@@ -1,0 +1,467 @@
+/*
+ * name: budiono;
+ * date: jun-10, 15:33, tue-2025; #57; payroll_field;accrue_field; 
+ */
+
+'use strict';
+
+var RptVacationandSickTime={}
+  
+RptVacationandSickTime.table_name='rpt_vacation_and_sick_time';
+RptVacationandSickTime.title='Vacation and Sick Time Report';
+RptVacationandSickTime.period=new PeriodLook(RptVacationandSickTime);
+
+RptVacationandSickTime.show=(tiket)=>{
+  tiket.modul=RptVacationandSickTime.table_name;
+  tiket.menu.name=RptVacationandSickTime.title;
+  tiket.rpt={
+    "filter":{
+      "period_id": "",
+      "from":"",
+      "to":"",
+      "employee_id": "",
+    },
+    "refresh":false
+  };
+  
+  var baru=exist(tiket);
+  if(baru==-1){
+    var newTxs=new BingkaiUtama(tiket);
+    var indek=newTxs.show();
+
+    RptVacationandSickTime.preview(indek);
+  }else{
+    show(baru);
+  }
+}
+
+RptVacationandSickTime.preview=(indek)=>{
+  toolbar.none(indek);
+  toolbar.hide(indek);
+  toolbar.close(indek,()=>{ui.CLOSE(indek); });
+  
+  if(bingkai[indek].rpt.refresh==false){
+    RptVacationandSickTime.proses(indek);
+  } else {  
+    RptVacationandSickTime.display(indek);
+  };
+};
+
+RptVacationandSickTime.proses=(indek)=>{
+  
+  var html='<h1>Please wait... loading data</h1>'
+    +'<div id="layar_'+indek+'"></div>'
+    +'<div id="msg_'+indek+'"></div>';
+    
+  content.html(indek,html);
+  
+  function getCompany(callback){
+    var sql="SELECT company_id,name,start_date"
+      +" FROM company"
+      +" WHERE company_id='"+bingkai[indek].company.id+"'"
+    DownloadEmpat.run(indek,sql,(h)=>{
+      bingkai[indek].rpt.company=h;
+      d=JSON.parse(h);
+      if(d.rows.length>0){
+        if(bingkai[indek].rpt.filter.from==""){
+          var d=objectMany(d.fields,d.rows);
+          bingkai[indek].rpt.filter.from=d[0].start_date;
+        }
+        if(bingkai[indek].rpt.filter.to==""){
+          bingkai[indek].rpt.filter.to=tglSekarang();
+        }
+      }
+      return callback();
+    });
+  }
+  
+  function getEmployeeBegins(callback){
+    
+  }
+  
+  function getBeginPayrollEntry(callback){
+    var from=bingkai[indek].rpt.filter.from;
+    var sql="SELECT employee_id,employee_name,date,payroll_no,accrue_field"
+      +" FROM payroll_entry"
+      +" WHERE company_id='"+bingkai[indek].company.id+"'"
+      +" AND date < '"+from+"'"
+    DownloadEmpat.run(indek,sql,(h)=>{
+      bingkai[indek].rpt.begin_payroll=h;
+      return callback();
+    });
+  }
+  
+  function getPayrollEntry(callback){
+    var from=bingkai[indek].rpt.filter.from;
+    var to=bingkai[indek].rpt.filter.to;
+    var sql="SELECT employee_id,employee_name,date,payroll_no,accrue_field"
+      +" FROM payroll_entry"
+      +" WHERE company_id='"+bingkai[indek].company.id+"'"
+      +" AND date between '"+from+"' AND '"+to+"'";
+    DownloadEmpat.run(indek,sql,(h)=>{
+      bingkai[indek].rpt.payroll_entry=h;
+      return callback();
+    });
+  }
+  
+  function getJoinArray(callback){
+    var a=JSON.parse(bingkai[indek].rpt.begin_payroll).rows;
+    var b=JSON.parse(bingkai[indek].rpt.payroll_entry).rows;
+    var f=["employee_id","name","date","reference","field","given","taken","remaining"];
+    var i,j;
+    var r=[];
+    var d;
+    var sisa=0
+    
+    // begin payroll_entry
+    for(i=0;i<a.length;i++){
+      
+      d=JSON.parse(a[i][4]);
+      
+      for(j=0;j<d.length;j++){
+        sisa=Number(d[j].given)-Number(d[j].taken)
+        r.push([
+          a[i][0], // employee_id
+          a[i][1], // name
+          "",              // date
+          "Beginning",     // reference
+          d[j].field_name, // field_name,
+          d[j].given, // given,
+          d[j].taken, // taken,
+          sisa, // remaining,
+        ]);
+      }
+    }
+    
+    // payroll entry
+    for(i=0;i<b.length;i++){
+      
+      d=JSON.parse(b[i][4]);
+      
+      for(j=0;j<d.length;j++){
+        sisa=Number(d[j].given)-Number(d[j].taken)
+        r.push([
+          b[i][0],         // 0-employee_id
+          b[i][1],         // 1-name
+          b[i][2],         // 2-date
+          b[i][3],         // 3-reference
+          d[j].field_name, // 4-field_name,
+          d[j].given,      // 5-given,
+          d[j].taken,      // 6-taken,
+          sisa,            // 7-remaining,
+        ]);
+      }
+    }
+    
+    bingkai[indek].rpt.join_array=JSON.stringify({
+      fields: f,
+      rows: r
+    });
+    
+    return callback();
+  }
+  
+  function getSumArray(callback){
+    var a=JSON.parse(bingkai[indek].rpt.join_array).rows
+    var f=JSON.parse(bingkai[indek].rpt.join_array).fields;
+    var i,j;
+    var r=[];
+    var ada=0;
+    
+    for(i=0;i<a.length;i++){
+      ada=0;
+      for(j=0;j<r.length;j++){// edit;
+        if(a[i][0]==r[j][0]){ // employee_id
+          if(a[i][2]==r[j][2]){ // date
+            if(a[i][3]==r[j][3]){ // reference
+              if(a[i][4]==r[j][4]){ // field_name
+                ada=1;
+                r[j][5]+=Number(a[i][5]); // sum_given;
+                r[j][6]+=Number(a[i][6]); // sum_taken;
+                r[j][7]+=Number(a[i][7]); // sum_remain;
+              };
+            };
+          };
+        };
+      };
+      if(ada==0){// new;
+        r.push([
+          a[i][0],
+          a[i][1],
+          a[i][2],
+          a[i][3],
+          //(a[i][4]+'    ').slice(0,10),
+          a[i][4],
+          Number(a[i][5]),
+          Number(a[i][6]),
+          Number(a[i][7]),
+        ])
+      }
+    };
+    
+    
+    bingkai[indek].rpt.sum_array=JSON.stringify({
+      fields: f,
+      rows: r
+    });
+    
+    return callback();
+  }
+  
+  getCompany(()=>{
+    getBeginPayrollEntry(()=>{
+      getPayrollEntry(()=>{  
+        getJoinArray(()=>{
+          getSumArray(()=>{
+            RptVacationandSickTime.display( indek );
+          });
+        });
+      });
+    });
+  });
+  
+  bingkai[indek].rpt.refresh=true;
+};
+
+RptVacationandSickTime.display=(indek)=>{
+
+  toolbar.refresh(indek,()=>{ RptVacationandSickTime.proses(indek); });
+  toolbar.filter(indek,()=>{ RptVacationandSickTime.filter(indek); });
+  toolbar.print(indek,()=>{ RptVacationandSickTime.print(indek); });
+  
+  var s=new rptHTML();
+  var company=JSON.parse( bingkai[indek].rpt.company);
+  var d=JSON.parse( bingkai[indek].rpt.sum_array );
+  var h=objectMany( d.fields,d.rows );
+  var filter=bingkai[indek].rpt.filter;
+  var i=0;  
+  var W=[
+    90, // employee_id
+    90, // name
+    90, // date
+    90, // reference
+    90, // field-name
+    80, // vacation-given
+    80, // vacation-taken
+    80, // vacation-remaining
+  ];
+  var L=[];
+  var k=5;
+  
+  for(i=0;i<W.length;i++){
+    if(i==0) {
+      L.push(k);
+    }
+    k+=(Number(W[i])+10);
+    L.push( k );
+  }
+
+  var html=''
+    +'<div style="position:relative;display:block;margin:0 auto;width:95%;margin-top:10px;border:0px solid red;">'
+    +'<div class="a42" id="cetak2" style="margin:0 auto;">'// a4;
+    
+      +'<div style="position:sticky;width:210mm;margin-top:0;padding:0;">'// header
+        +'<div style="width:100%;background:white;display:block;">'
+
+          +s.setCompany( company.rows[0][1] )
+          +s.setTitle( RptVacationandSickTime.title )
+          +s.setFromTo( filter.from, filter.to )
+
+          +'<canvas id="cv_'+indek+'" width=800 height=25 style="position:absolute;border:1px solid lightgrey;"></canvas>'
+
+            +s.setHeader(L[0], W[0], "left", 'Employee ID')
+            +s.setHeader(L[1], W[1], "left", 'Employee Name')
+            +s.setHeader(L[2], W[2], "left", 'Date')
+            +s.setHeader(L[3], W[3], "left", 'Reference')
+            +s.setHeader(L[4], W[4], "left", 'Field Name')
+            +s.setHeader(L[5], W[5], "right", 'Given')
+            +s.setHeader(L[6], W[6], "right", 'Taken')
+            +s.setHeader(L[7], W[7], "right", 'Remaining')
+            
+            +'<br>'
+
+        +'</div>'
+      +'</div>'
+      
+//--detail
+      +'<div style="position:relative;overflow-y:auto;height:400px;margin-top:10px;border:0px solid blue;">'
+
+      var h2=h.sort( sortByID );
+      var employee_id,date,reference,field;
+      var st_given=0,st_taken=0,st_remain=0;
+      var X=300;
+
+      for(i=0;i<h2.length;i++){
+        if(i>0){
+          if(field!=h2[i].field){
+            html+=''
+              +s.setSubTotal(L[5], W[5], "right", st_given )
+              +s.setSubTotal(L[6], W[6], "right", st_taken )
+              +s.setSubTotal(L[7], W[7], "right", st_remain )
+              +'<br>';
+              
+            st_given=0;
+            st_taken=0;
+            st_remain=0;
+          }
+        }
+
+        if(employee_id!=h2[i].employee_id){          
+          html+=''
+            +'<br>'
+            +s.setLabel(L[0], W[0], "left", h2[i].employee_id )
+            +s.setLabel(L[1], X, "left", h2[i].name )
+            +'<br>';
+          
+
+        }
+
+        if(date!=h2[i].date){
+          html+=''
+            +s.setLabel(L[2], W[2], "left", tglWest(h2[i].date) )
+        }
+        if(reference!=h2[i].reference){
+          html+=''
+            +s.setLabel(L[3], W[3], "left", h2[i].reference )          
+        }
+        
+        html+=''
+          +s.setLabel(L[4], W[4], "left", h2[i].field )
+          +s.setLabel(L[5], W[5], "right", h2[i].given )
+          +s.setLabel(L[6], W[6], "right", h2[i].taken )
+          +s.setLabel(L[7], W[7], "right", h2[i].remaining )
+        html+='<br>';
+        
+        employee_id=h2[i].employee_id;
+        date=h2[i].date;
+        reference=h2[i].reference;
+        field=h2[i].field;
+        
+        st_given+=Number(h2[i].given);
+        st_taken+=Number(h2[i].taken);
+        st_remain+=Number(h2[i].remaining);
+        
+      }
+      //html+=''
+        //+'<br>';
+      html+=''
+        +s.setSubTotal(L[5], W[5], "right", st_given )
+        +s.setSubTotal(L[6], W[6], "right", st_taken )
+        +s.setSubTotal(L[7], W[7], "right", st_remain )
+        
+      html+='</div>'
+// end-detail
+
+    html+='</div>'
+  +'</div>';
+  content.html(indek,html);
+
+  var cv=document.getElementById("cv_"+indek);
+  var ctx=cv.getContext("2d");
+
+  for(i=1;i<L.length;i++){
+    ctx.beginPath();
+    ctx.moveTo(L[i],0);
+    ctx.lineTo(L[i],45);
+    ctx.strokeStyle="grey";
+    ctx.stroke();
+  }
+  
+  ctx.beginPath();
+  ctx.rect(0,0,L[L.length-1],25); // x,y,width,height
+  ctx.strokeStyle="grey";
+  ctx.stroke();
+
+  function sortByID(a,b){ // sort multidimensi;
+    if( String(a.employee_id).concat(a.field,a.date,a.reference) === String(b.employee_id).concat(b.field,b.date,b.reference) ){
+      return 0;
+    }
+    else{
+      if( String(a.employee_id).concat(a.field,a.date,a.reference) < String(b.employee_id).concat(b.field,b.date,b.reference) ) {
+        return -1;
+      }
+      else{
+        return 1;
+      }
+    }
+  }
+};
+
+RptVacationandSickTime.filter=(indek)=>{
+  toolbar.none(indek);
+  toolbar.hide(indek);
+  toolbar.back(indek,()=>{ RptVacationandSickTime.preview(indek); });
+  toolbar.preview(indek,()=>{ RptVacationandSickTime.filterExecute(indek); });
+  RptVacationandSickTime.formFilter(indek);
+};
+
+RptVacationandSickTime.formFilter=(indek)=>{
+  var html='<div>'
+    +'<ul>'
+    
+      +'<li><label>Period</label>'
+        +'<input type="text" id="period_id_'+indek+'" size="17">'
+        +'<button type="button" '
+        +' id="btn_period_'+indek+'" '
+        +' onclick="RptCheckRegister.period.getPaging(\''+indek+'\''
+        +',\'period_id_'+indek+'\')"'
+        +' class="btn_find"></button>'
+
+        +'</li>'
+    
+      +'<li><label>From</label>'
+        +'<input type="date" id="from_'+indek+'">'
+        +'</li>'
+        
+      +'<li><label>To</label>'
+        +'<input type="date" id="to_'+indek+'">'
+        +'</li>'
+        
+      +'<li><label>Employee ID</label>'
+        +'<input type="text" id="employee_id_'+indek+'">'
+        +'</li>'
+        
+    +'</ul>'
+    +'</div>'
+  content.html(indek,html);
+  
+  setEV('period_id_'+indek, bingkai[indek].rpt.filter.period_id ); 
+  setEV('from_'+indek, bingkai[indek].rpt.filter.from ); 
+  setEV('to_'+indek, bingkai[indek].rpt.filter.to ); 
+  setEV('employee_id_'+indek, bingkai[indek].rpt.filter.employee_id ); 
+};
+
+RptVacationandSickTime.setPeriod=(indek,d)=>{
+  var id_kolom=bingkai[indek].id_kolom;
+  setEV(id_kolom, d.period_id);
+  RptVacationandSickTime.getPeriod(indek);
+};
+
+RptVacationandSickTime.getPeriod=(indek)=>{
+  RptVacationandSickTime.period.getOne(indek,
+    getEV('period_id_'+indek),
+  (paket)=>{
+    if(paket.err.id==0 && paket.count>0){
+      var d=objectOne(paket.fields,paket.data);
+      setEV('from_'+indek, d.start_date);
+      setEV('to_'+indek, d.end_date) ;
+    }
+  });
+};
+
+RptVacationandSickTime.filterExecute=(indek)=>{
+  bingkai[indek].rpt.filter={
+    "period_id": getEV('period_id_'+indek),
+    "from": getEV('from_'+indek),
+    "to": getEV("to_"+indek),
+    "employee_id": getEV("employee_id_"+indek),
+  }
+  bingkai[indek].rpt.refresh=false;
+  RptVacationandSickTime.preview(indek);
+};
+
+RptVacationandSickTime.print=(indek)=>{};
+
+
+
+// eof: 
