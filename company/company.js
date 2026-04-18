@@ -113,12 +113,13 @@ Company.readShow=(indek)=>{
         +'&company_id='+d[x].company_id
         +'&company_logo='+d[x].company_logo
         +'&tgl='+new Date()+'"'
-        
+/*        
         +' srcset="'+bingkai[indek].server.url+'logo'
         +'?login_id='+bingkai[indek].login.id
         +'&company_id='+d[x].company_id
         +'&company_logo='+d[x].company_logo
         +'&tgl='+new Date()+'"'
+*/        
         +'>'
       html+='<tr>'
         +'<td align="center">'+n+'</td>'
@@ -310,7 +311,7 @@ Company.formEntry=(indek,metode)=>{
           +'<p>'
             +'<img id="folder_image_'+indek+'" '
             +' width="150" height="150"/ '
-            +' srcset='+bingkai[indek].server.url+"logo"
+            +' src='+bingkai[indek].server.url+"logo"
             +'>'
 /*            
             +'<iframe id="folder_image_'+indek+'" '
@@ -447,7 +448,7 @@ Company.readOne=(indek,eop)=>{
     setEI("decimal_places_"+indek, d.decimal_places);
 
     // karena harus https, maka gunakan dua src dan srcset;
-    document.getElementById("folder_image_"+indek).srcset=logo
+//    document.getElementById("folder_image_"+indek).srcset=logo
     document.getElementById("folder_image_"+indek).src=logo;
 
     bingkai[indek].db_path='/'

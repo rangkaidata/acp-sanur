@@ -81,25 +81,25 @@ Logout.form01=(indek)=>{
         +'<i id="fullname_'+indek+'"></i></li>'
         
       +'<li><label>Size:&nbsp;</label>'
-        +' <i id="size_'+indek+'">...</i> tx</li>'
+        +'<i id="size_'+indek+'">...</i> tx</li>'
         
       +'<li><label>Used:&nbsp;</label>'
-        +' <i id="used_'+indek+'">...</i> tx</li>'
+        +'<i id="used_'+indek+'">...</i> tx</li>'
         
       +'<li><label>Free:&nbsp;</label>'
-        +' <i id="free_'+indek+'">...</i> tx</li>'
+        +'<i id="free_'+indek+'">...</i> tx</li>'
         
       +'<li><label>Login Date:&nbsp;</label>'
-        +' <i id="login_date_'+indek+'"></i></li>'
+        +'<i id="login_date_'+indek+'"></i></li>'
         
       +'<li><label>Login ID:&nbsp;</label>'
-        +' <i id="login_id_'+indek+'"></i></li>'
+        +'<i id="login_id_'+indek+'"></i></li>'
         
       +'<li><label>Login Expired in:&nbsp;</label>'
-        +' <i id="login_expired_'+indek+'"></i></li>'
+        +'<i id="login_expired_'+indek+'"></i></li>'
         
       +'<li><label>Login Duration:&nbsp;</label>'
-        +' <i id="login_duration_'+indek+'"></i></li>'
+        +'<i id="login_duration_'+indek+'"></i></li>'
     +'</ul>'
     +'<br>'
     +'<button id="btn_logout_'+indek+'" value="Log Out"'

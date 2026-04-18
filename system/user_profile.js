@@ -101,7 +101,7 @@ UserProfile.form=(indek)=>{
 */        
         +'<p><img id="folder_image_'+indek+'" '
         +' width="200" height="200"/ '
-        +' srcset="'+bingkai[indek].server.url+'photo">'
+        +' src="'+bingkai[indek].server.url+'photo">'
         +'</p>'
         
         +'<input type="text" disabled'
@@ -138,7 +138,7 @@ UserProfile.readOne=(indek,eop)=>{
       setEV("user_photo_"+indek, v.user_photo);
 
       document.getElementById("folder_image_"+indek).src=photo;
-      document.getElementById("folder_image_"+indek).srcset=photo;
+//      document.getElementById("folder_image_"+indek).srcset=photo;
 
       
     }
@@ -208,8 +208,9 @@ UserProfile.formEdit=(indek)=>{
 */
 //        +'<p><img id="folder_image_'+indek+'" '
 //        +'width="150" height="150"/></p>'        
+
         +'<p><img id="folder_image_'+indek+'" '
-        +'width="150" height="150"/ srcset='+bingkai[0].server.url+'photo?login_id='
+        +'width="150" height="150"/ src='+bingkai[0].server.url+'photo?login_id='
         +bingkai[indek].login.id+'></p>'
         
         +'<input type="text" id="user_photo_'+indek+'" value="" disabled class="b-text">' 
@@ -247,7 +248,7 @@ UserProfile.readOne02=(indek,eop)=>{
       setEV("user_photo_"+indek, v.user_photo);
       
       document.getElementById("folder_image_"+indek).src=photo;
-      document.getElementById("folder_image_"+indek).srcset=photo;
+//      document.getElementById("folder_image_"+indek).srcset=photo;
         
             
       statusbar.ready(indek);

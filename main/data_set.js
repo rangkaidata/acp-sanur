@@ -23,6 +23,8 @@
  * edit: jan-13, 12:09, mon-2025; contacts, groups;
  * edit: feb-06, 13:08, thu-2025; #39; +directory;
  * edit: sep-28, 14:28, sun-2025; #77; decimal_places;
+ * -----------------------------; happy new year 2026;
+ * edit: apr-14, 19:06, tue-2026; #93; subdomain api0.rangkaidata.com
  */
 
 'use strict';
@@ -32,7 +34,7 @@ const config_local={
   url:'http://localhost:8080/',
 }
 const config_server={
-  url:'https://api.rangkaidata.com/',
+  url:'https://www.api0.rangkaidata.com/',
 }
 /* GANTI DISINI UNTUK KONEKSI KE SERVER ATAU KE LOKAL */
 const config=config_server;

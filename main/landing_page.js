@@ -61,7 +61,7 @@ function LandingPage(){
       <br>
       <br>
       <p>
-        &copy; 2019-${tahun}&nbsp;<a href="https://x.com/budionopixel">budionopixel</a>&nbsp;|&nbsp;<a href="https://github.com/rangkaidata">GitHub.com</a>
+        &copy; 2019-${tahun}&nbsp;Rangkaidata.com | ACP-Sanur | <a href="https://x.com/budionopixel">X.com</a>&nbsp;|&nbsp;<a href="https://github.com/rangkaidata/acp-sanur">GitHub.com</a>
       </p>
     </div>`;
 
