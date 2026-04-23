@@ -26,6 +26,8 @@
  * edit: feb-14, 14:54, fri-2025; #40; new properties;
  * edit: mar-10, 22:02, mon-2025; #43; deep folder;
  * edit: mar-22, 13:57, sat-2025; #44; my_menu;
+ * -----------------------------; happy new year 2026;
+ * edit: apr-23, 11:00, thu-2026; #92; add next & prevoius
  */
  
 'use strict';
@@ -148,14 +150,18 @@ Accounts.formEntry=(indek,metode)=>{
     +content.message(indek)
     +'<form autocomplete="off">'
       +'<ul>'      
+        
         +'<li><label>Account ID:</label>'
           +'<input type="text" '
           +' id="account_id_'+indek+'">'
         +'</li>'
+        
         +'<li><label>Account Name:</label>'
           +'<input type="text" '
+          +' size="30"'
           +' id="name_'+indek+'">'
         +'</li>'
+        
         +'<li><label>Account Class:</label>'
           +'<select id="class_'+indek+'">'
             +getDataAccountClass(indek)
@@ -455,6 +461,62 @@ Accounts.finalPath=(indek)=>{
   if(bingkai[indek].metode!=MODE_DELETE){
     toolbar.properties(indek,()=>{Accounts.properties(indek);});
   }
+}
+
+Accounts.nextPrevious=(indek,val)=>{
+
+  Accounts.readOffset(indek,val,(d)=>{
+    Accounts.formUpdate(indek,d.account_id);
+  });  
+
+}
+
+Accounts.readOffset=(indek,val,callback)=>{
+
+  setCursor(indek,val);
+
+  db.run(indek,{
+    query:"SELECT * "
+      +" FROM accounts"
+      +" WHERE admin_name='"+bingkai[indek].admin.name+"'"
+      +" AND company_id='"+bingkai[indek].company.id+"'"
+      +" ORDER BY account_id"
+      +" LIMIT 1"
+      +" OFFSET "+bingkai[indek].offset
+      
+  },(p)=>{
+    
+    Accounts.setFields(p,(d)=>{// 
+      bingkai[indek].account_id=d.account_id;
+
+      return callback(d);
+    });
+  }); 
+}
+
+Accounts.setFields=(p,callback)=>{
+  var m={
+    
+    account_id: "",
+    name: "",
+    class: -1,
+    inactive: 0,
+    file_id: "",
+  }
+  
+  if(p.count>0){
+    var d=objectOne(p.fields,p.data) ;
+
+    m.account_id=d.account_id;
+    m.name=d.name;
+    m.class=d.class;
+    m.inactive=d.inactive;
+    m.file_id= d.file_id;
+    
+  }
+  
+  return callback(m);
+
 }
 
 

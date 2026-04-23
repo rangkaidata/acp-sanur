@@ -121,6 +121,7 @@ Company.readShow=(indek)=>{
         +'&tgl='+new Date()+'"'
 */        
         +'>'
+      console.log(logo);
       html+='<tr>'
         +'<td align="center">'+n+'</td>'
         +'<td>'+logo+'</td>'
