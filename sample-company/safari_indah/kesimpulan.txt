@@ -1,0 +1,10 @@
+kesimpulan:
+
+start_data: 1 december-2025
+
+accounts: 36
+account_begin: 18
+journal_entry: 33
+
+account_begins:   710.613.500.00
+account_balances: 979.093.000.00

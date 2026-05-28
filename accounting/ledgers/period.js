@@ -194,7 +194,7 @@ Periods.ngumpet=(indek)=>{
 }
 
 Periods.createExecute=(indek)=>{
-  var period_id=tglWest(getEV('end_date_'+indek));
+  var period_id=tglEast(getEV('end_date_'+indek));
   var note=JSON.stringify([getEV("note_"+indek)]);
 
   db.execute(indek,{

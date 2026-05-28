@@ -115,6 +115,7 @@ Logout.form01=(indek)=>{
 }
 
 Logout.read_one=(indek)=>{
+  message.wait(indek);
   db.run(indek,{
     query:"SELECT * FROM login"
     +" WHERE login_id='"+bingkai[0].login.id+"'"
